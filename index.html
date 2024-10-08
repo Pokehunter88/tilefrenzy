@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="theme-color" content="#000000" />
-    <title>Tetris Attack</title>
+    <title>Tile Frenzy</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -571,6 +571,9 @@
             targetX * scale * 20 + targetX * scale - 2,
             targetY * scale * 20 + targetY * scale - 2
           );
+        
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 360, 400, 100)
       }
 
       function restart() {
@@ -2474,7 +2477,7 @@
         overflow: hidden;
         position: fixed;
         top: 5px;
-        left: 80px;
+        left: 180px;
         user-select: none; /* standard syntax */
         -webkit-user-select: none; /* webkit (safari, chrome) browsers */
         -moz-user-select: none; /* mozilla browsers */
