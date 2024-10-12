@@ -616,7 +616,7 @@
             setTimeout(function () {
               if (!running) canRestart = true;
             }, 4000);
-        }, 80);
+        }, 1);
       }
 
       function frameCycle() {
@@ -637,16 +637,16 @@
 
       // TODO
 
+      var gameOverImage = document.createElement("img");
+      gameOverImage.src = "https://raw.githubusercontent.com/Pokehunter88/Tile-Frenzy/refs/heads/main/gameOver.png";
+
       function endCycle() {
         setTimeout(
           function () {
             if (endFrame < 20) {
               updateCanvas();
             } else {
-              var img = document.createElement("img");
-              img.src = "/gameOver.png";
-
-              ctx.drawImage(img, 75, 0);
+              ctx.drawImage(gameOverImage, 75, 0);
               ctx.fillStyle = "black";
               ctx.fillRect(0, 50 + endFrame * 2, 400, (90 - endFrame) * 2);
             }
@@ -661,11 +661,12 @@
 
       // TODO
 
-      function drawTitle() {
-        var img = document.createElement("img");
-        img.src = "/title.png";
+      var titleImage = document.createElement("img");
+      titleImage.src =
+        "https://raw.githubusercontent.com/Pokehunter88/Tile-Frenzy/refs/heads/main/title.png";
 
-        ctx.drawImage(img, 75, 0);
+      function drawTitle() {
+        ctx.drawImage(titleImage, 75, 0);
       }
 
       function titleCycle() {
