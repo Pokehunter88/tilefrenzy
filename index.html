@@ -669,7 +669,7 @@
             } else {
               ctx.drawImage(gameOverImage, 75, 0);
               ctx.fillStyle = "black";
-              ctx.fillRect(0, 50 + endFrame * 2, 400, (90 - endFrame) * 2);
+              ctx.fillRect(75, 50 + endFrame * 2, 250, (90 - endFrame) * 2);
             }
 
             endFrame++;
@@ -724,36 +724,37 @@
       // TODO
 
       canvas.addEventListener("click", (e) => {
+        console.log(e.clientX + ", " + e.clientY);
         if (onTitle) return;
         if (
           e.clientX < 200 &&
           e.clientX > 0 &&
-          e.clientY < 680 &&
-          e.clientY > 480
+          e.clientY < 630 &&
+          e.clientY > 430
         ) {
           if (
             e.clientX > 100 &&
-            e.clientY - 480 > 200 - e.clientX &&
-            200 - (e.clientY - 480) > 200 - e.clientX
+            e.clientY - 430 > 200 - e.clientX &&
+            200 - (e.clientY - 430) > 200 - e.clientX
           ) {
             if (targetX < 4) targetX += 1;
           } else if (
             e.clientX < 100 &&
-            e.clientY - 480 > e.clientX &&
-            200 - (e.clientY - 480) > e.clientX
+            e.clientY - 430 > e.clientX &&
+            200 - (e.clientY - 430) > e.clientX
           ) {
             if (targetX > 0) targetX -= 1;
           } else if (
             e.clientY > 100 &&
-            e.clientX > e.clientY - 480 &&
-            200 - e.clientX > e.clientY - 480
+            e.clientX > e.clientY - 430 &&
+            200 - e.clientX > e.clientY - 430
           ) {
             if ((targetY < 7 && height >= -20) || (targetY < 8 && height < -20))
               targetY += 1;
           } else if (
             e.clientY > 100 &&
-            e.clientX > 200 - (e.clientY - 480) &&
-            200 - e.clientX > 200 - (e.clientY - 480)
+            e.clientX > 200 - (e.clientY - 430) &&
+            200 - e.clientX > 200 - (e.clientY - 430)
           ) {
             if (targetY > 1) targetY -= 1;
           }
@@ -762,8 +763,8 @@
         if (
           e.clientX < 400 &&
           e.clientX > 200 &&
-          e.clientY < 680 &&
-          e.clientY > 480
+          e.clientY < 630 &&
+          e.clientY > 430
         ) {
           if (
             position[targetY][targetX] != 0 ||
