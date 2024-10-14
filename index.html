@@ -809,45 +809,29 @@
       }
 
       canvas.addEventListener("click", (e) => {
-        if (
-          e.clientX < 200 &&
-          e.clientX > 0 &&
-          e.clientY < 630 &&
-          e.clientY > 430
-        ) {
-          if (
-            e.clientX > 100 &&
-            e.clientY - 430 > 200 - e.clientX &&
-            200 - (e.clientY - 430) > 200 - e.clientX
-          ) {
+        var rect = canvas.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+
+        console.log(x, y);
+
+        if (x < 200 && x > 0 && y < 630 && y > 430) {
+          if (x > 100 && y - 430 > 200 - x && 200 - (y - 430) > 200 - x) {
             moveRight();
-          } else if (
-            e.clientX < 100 &&
-            e.clientY - 430 > e.clientX &&
-            200 - (e.clientY - 430) > e.clientX
-          ) {
+          } else if (x < 100 && y - 430 > x && 200 - (y - 430) > x) {
             moveLeft();
-          } else if (
-            e.clientY > 100 &&
-            e.clientX > e.clientY - 430 &&
-            200 - e.clientX > e.clientY - 430
-          ) {
+          } else if (y > 100 && x > y - 430 && 200 - x > y - 430) {
             moveUp();
           } else if (
-            e.clientY > 100 &&
-            e.clientX > 200 - (e.clientY - 430) &&
-            200 - e.clientX > 200 - (e.clientY - 430)
+            y > 100 &&
+            x > 200 - (y - 430) &&
+            200 - x > 200 - (y - 430)
           ) {
             moveDown();
           }
         }
 
-        if (
-          e.clientX < 400 &&
-          e.clientX > 200 &&
-          e.clientY < 630 &&
-          e.clientY > 430
-        ) {
+        if (x < 400 && x > 200 && y < 630 && y > 430) {
           moveSwap();
         }
 
@@ -885,22 +869,10 @@
         touch-action: manipulation;
         overflow: hidden;
         position: fixed;
+        height: 90%;
         top: 30px;
-        left: 5px;
-        user-select: none; /* standard syntax */
-        -webkit-user-select: none; /* webkit (safari, chrome) browsers */
-        -moz-user-select: none; /* mozilla browsers */
-        -khtml-user-select: none; /* webkit (konqueror) browsers */
-        -ms-user-select: none; /* IE10+ */
-      }
-
-      #pixelCanvas2 {
-        border: 2px solid grey;
-        touch-action: manipulation;
-        overflow: hidden;
-        position: fixed;
-        top: 480px;
-        left: 5px;
+        left: 50%;
+        transform: translate(-50%, 2%);
         user-select: none; /* standard syntax */
         -webkit-user-select: none; /* webkit (safari, chrome) browsers */
         -moz-user-select: none; /* mozilla browsers */
@@ -914,7 +886,8 @@
         overflow: hidden;
         position: fixed;
         top: 5px;
-        left: 175px;
+        left: 50%;
+        transform: translate(-50%, 5px);
         user-select: none; /* standard syntax */
         -webkit-user-select: none; /* webkit (safari, chrome) browsers */
         -moz-user-select: none; /* mozilla browsers */
