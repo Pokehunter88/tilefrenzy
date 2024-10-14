@@ -633,13 +633,17 @@
           }
         }
         cycle();
-        
-        song2Audio.play();
-        song2Audio.currentTime = 0;
-        song2Audio.loop = true;
-        song2Audio.volume = 0;
 
-        startMusic2Volume();
+        var music = new URLSearchParams(window.location.search).get("music");
+
+        if (music == "true" || !music) {
+          song2Audio.play();
+          song2Audio.currentTime = 0;
+          song2Audio.loop = true;
+          song2Audio.volume = 0;
+
+          startMusic2Volume();
+        }
       }
 
       var gameBorder1 = document.createElement("img");
@@ -790,10 +794,13 @@
       var songStarted = false;
 
       async function startMusic(volume) {
-        songAudio.play();
-        songAudio.currentTime = 0;
-        songAudio.loop = true;
-        songAudio.volume = volume;
+        var music = new URLSearchParams(window.location.search).get("music");
+        if (music == "true" || !music) {
+          songAudio.play();
+          songAudio.currentTime = 0;
+          songAudio.loop = true;
+          songAudio.volume = volume;
+        }
       }
 
       async function changeMusicVolume(volume) {
@@ -846,10 +853,6 @@
           if (song2Audio.volume > 0) stopMusic2();
         }, 20);
       }
-
-      document.addEventListener("DOMContentLoaded", (event) => {
-        titleCycle();
-      });
 
       // TODO
       var moveAudio = new Audio("move.wav");
@@ -949,14 +952,18 @@
       });
 
       document.addEventListener("click", (e) => {
+        if (!loaded) {
+          titleCycle();
+        }
+
         if (!songStarted) {
           songStarted = true;
           startMusic(0.5);
 
-          gameOverAudio.play()
+          gameOverAudio.play();
           gameOverAudio.currentTime = gameOverAudio.duration;
 
-          swapAudio.play()
+          swapAudio.play();
           swapAudio.currentTime = swapAudio.duration;
         }
 
@@ -987,6 +994,15 @@
         if (running && !onTitle) updateCanvas();
         if (canRestart) restart();
       };
+
+      var loaded = false;
+
+      document.addEventListener("DOMContentLoaded", (event) => {
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, 400, 600);
+
+        // titleCycle();
+      });
     </script>
 
     <style>
