@@ -791,6 +791,7 @@
       }
 
       var songAudio = new Audio("song.wav");
+      songAudio.setAttribute("preload", "auto");
       var songStarted = false;
 
       async function startMusic(volume) {
@@ -828,6 +829,7 @@
       }
 
       var song2Audio = new Audio("song2.wav");
+      song2Audio.setAttribute("preload", "auto");
 
       async function changeMusic2Volume(volume) {
         song2Audio.volume = volume;
@@ -856,8 +858,11 @@
 
       // TODO
       var moveAudio = new Audio("move.wav");
+      moveAudio.setAttribute("preload", "auto");
       var swapAudio = new Audio("swap.wav");
+      swapAudio.setAttribute("preload", "auto");
       var startAudio = new Audio("start.wav");
+      startAudio.setAttribute("preload", "auto");
 
       function moveUp() {
         moveAudio.play();
