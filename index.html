@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
     <meta name="theme-color" content="#000000" />
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <title>Tile Frenzy</title>
   </head>
   <body>
@@ -176,7 +176,7 @@
         if (height >= -18) {
           for (var x = 0; x < sizeX; x++) {
             if (position[8][x] != 0) {
-              console.log("game over");
+              console.log("game over score: " + score);
               running = false;
               endFrame = 0;
               endCycle();
@@ -588,7 +588,7 @@
 
         ctx.fillStyle = "black";
         ctx.fillRect(0, 360, 400, 100);
-        
+
         ctx.drawImage(gameBorder, 0, 0);
       }
 
@@ -616,27 +616,29 @@
         }
         cycle();
       }
-      
+
       var gameBorder = document.createElement("img");
       gameBorder.src = "gameBorder.png";
 
       function cycle() {
-        setTimeout(function () {
-          height += 1;
+        setTimeout(
+          function () {
+            height += 1;
 
-          updatePhysics();
-          updateCanvas();
+            updatePhysics();
+            updateCanvas();
 
+            if (pause) frameCycle();
 
-          if (pause) frameCycle();
+            if (running && !pause) cycle();
 
-          if (running && !pause) cycle();
-
-          if (!running && !pause)
-            setTimeout(function () {
-              if (!running) canRestart = true;
-            }, 4000);
-        }, 80);
+            // if (!running && !pause)
+            //   setTimeout(function () {
+            //     if (!running) canRestart = true;
+            //   }, 4000);
+          },
+          speed == 1 ? 160 : speed == 2 ? 80 : 50
+        );
       }
 
       function frameCycle() {
@@ -666,28 +668,67 @@
           function () {
             if (endFrame < 20) {
               updateCanvas();
-            } else {
+            } else if (endFrame < 90) {
               ctx.drawImage(gameOverImage, 75, 0);
               ctx.fillStyle = "black";
               ctx.fillRect(75, 50 + endFrame * 2, 250, (90 - endFrame) * 2);
+            } else if (endFrame > 140) {
+              ctx.drawImage(gameOverImage, 75, 0);
+              ctx.fillStyle = "black";
+              ctx.fillRect(75, 90, 250, (endFrame - 140) * 2);
             }
 
             endFrame++;
 
-            if (endFrame < 90 && !running) endCycle();
+            if (endFrame < 250 && !running) endCycle();
+            else {
+              canRestart = false;
+              height = 0;
+              targetX = 0;
+              targetY = 1;
+              running = false;
+              endFrame = 0;
+              pausePosition = [0, 0, 0, 0, 0, 0];
+              pauseType = 0;
+              pauseFrame = 0;
+              pause = false;
+              for (var k = 0; k < sizeY; k++) {
+                position[k] = new Array(sizeX);
+              }
+              for (var x = 0; x < sizeX; x++) {
+                for (var y = 0; y < sizeY; y++) {
+                  position[y][x] = Math.floor(Math.random() * 5) + 1;
+                }
+              }
+              onTitle = true;
+              starting = false;
+              startingFrame = 0;
+              titleCycle();
+            }
           },
-          endFrame < 20 ? 120 : 5
+          endFrame < 20 ? 120 : 10
         );
       }
 
       // TODO
 
-      var titleImage = document.createElement("img");
-      titleImage.src = "title.png";
+      var titleImage1 = document.createElement("img");
+      titleImage1.src = "title1.png";
+      var titleImage2 = document.createElement("img");
+      titleImage2.src = "title2.png";
+      var titleImage3 = document.createElement("img");
+      titleImage3.src = "title3.png";
+
       // titleImage.src = "https://raw.githubusercontent.com/Pokehunter88/Tile-Frenzy/refs/heads/main/title.png";
 
+      var speed = 1;
+
       function drawTitle() {
-        ctx.drawImage(titleImage, 75, 0);
+        ctx.drawImage(
+          speed == 1 ? titleImage1 : speed == 2 ? titleImage2 : titleImage3,
+          75,
+          0
+        );
       }
 
       function titleCycle() {
@@ -723,9 +764,52 @@
 
       // TODO
 
+      function moveUp() {
+        if (onTitle) {
+          speed = speed == 1 ? 3 : speed == 2 ? 1 : 2;
+          return;
+        }
+
+        if ((targetY < 7 && height >= -20) || (targetY < 8 && height < -20))
+          targetY += 1;
+      }
+
+      function moveDown() {
+        if (onTitle) {
+          speed = speed == 1 ? 2 : speed == 2 ? 3 : 1;
+          return;
+        }
+
+        if (targetY > 1) targetY -= 1;
+      }
+
+      function moveLeft() {
+        if (targetX > 0) targetX -= 1;
+      }
+
+      function moveRight() {
+        if (targetX < 4) targetX += 1;
+      }
+
+      function moveSwap() {
+        if (canRestart) restart();
+        if (onTitle) {
+          starting = true;
+          return;
+        }
+        if (
+          position[targetY][targetX] != 0 ||
+          position[targetY][targetX + 1] != 0
+        ) {
+          var block1 = position[targetY][targetX];
+          var block2 = position[targetY][targetX + 1];
+
+          position[targetY][targetX] = block2;
+          position[targetY][targetX + 1] = block1;
+        }
+      }
+
       canvas.addEventListener("click", (e) => {
-        console.log(e.clientX + ", " + e.clientY);
-        if (onTitle) return;
         if (
           e.clientX < 200 &&
           e.clientX > 0 &&
@@ -737,26 +821,25 @@
             e.clientY - 430 > 200 - e.clientX &&
             200 - (e.clientY - 430) > 200 - e.clientX
           ) {
-            if (targetX < 4) targetX += 1;
+            moveRight();
           } else if (
             e.clientX < 100 &&
             e.clientY - 430 > e.clientX &&
             200 - (e.clientY - 430) > e.clientX
           ) {
-            if (targetX > 0) targetX -= 1;
+            moveLeft();
           } else if (
             e.clientY > 100 &&
             e.clientX > e.clientY - 430 &&
             200 - e.clientX > e.clientY - 430
           ) {
-            if ((targetY < 7 && height >= -20) || (targetY < 8 && height < -20))
-              targetY += 1;
+            moveUp();
           } else if (
             e.clientY > 100 &&
             e.clientX > 200 - (e.clientY - 430) &&
             200 - e.clientX > 200 - (e.clientY - 430)
           ) {
-            if (targetY > 1) targetY -= 1;
+            moveDown();
           }
         }
 
@@ -766,57 +849,30 @@
           e.clientY < 630 &&
           e.clientY > 430
         ) {
-          if (
-            position[targetY][targetX] != 0 ||
-            position[targetY][targetX + 1] != 0
-          ) {
-            var block1 = position[targetY][targetX];
-            var block2 = position[targetY][targetX + 1];
-
-            position[targetY][targetX] = block2;
-            position[targetY][targetX + 1] = block1;
-          }
+          moveSwap();
         }
 
         if (running && !onTitle) updateCanvas();
       });
 
-      document.addEventListener("click", (e) => {
-        if (canRestart) restart();
-        if (onTitle) starting = true;
-      });
+      // document.addEventListener("click", (e) => {
+      //   if (canRestart) restart();
+      //   if (onTitle) starting = true;
+      // });
 
       document.onkeypress = function (e) {
-        if (onTitle) {
-          starting = true;
-          return;
-        }
-
         e = e || window.event;
-        // use e.keyCode
-        console.log(e.keyCode);
 
-        if (e.keyCode == 97 && targetX > 0) {
-          targetX -= 1;
-        } else if (e.keyCode == 100 && targetX < 4) {
-          targetX += 1;
-        } else if (
-          e.keyCode == 119 &&
-          ((targetY < 7 && height >= -20) || (targetY < 8 && height < -20))
-        ) {
-          targetY += 1;
-        } else if (e.keyCode == 115 && targetY > 1) {
-          targetY -= 1;
-        } else if (
-          e.keyCode == 32 &&
-          (position[targetY][targetX] != 0 ||
-            position[targetY][targetX + 1] != 0)
-        ) {
-          var block1 = position[targetY][targetX];
-          var block2 = position[targetY][targetX + 1];
-
-          position[targetY][targetX] = block2;
-          position[targetY][targetX + 1] = block1;
+        if (e.keyCode == 97) {
+          moveLeft();
+        } else if (e.keyCode == 100) {
+          moveRight();
+        } else if (e.keyCode == 119) {
+          moveUp();
+        } else if (e.keyCode == 115) {
+          moveDown();
+        } else if (e.keyCode == 32) {
+          moveSwap();
         }
 
         if (running && !onTitle) updateCanvas();
