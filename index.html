@@ -110,6 +110,7 @@
       var scoreAudio = new Howl({
         src: ["score.wav"],
         volume: 1,
+        html5: true,
         onload: function () {
           loadedCount++;
           checkIfLoaded();
@@ -127,6 +128,7 @@
       var gameOverAudio = new Howl({
         src: ["gameOver.wav"],
         volume: 1,
+        html5: true,
         onload: function () {
           loadedCount++;
           checkIfLoaded();
@@ -814,6 +816,7 @@
         src: ["song.wav"],
         loop: true,
         volume: 0.5,
+        html5: true,
         onload: function () {
           loadedCount++;
           checkIfLoaded();
@@ -841,6 +844,7 @@
         src: ["song2.wav"],
         loop: true,
         volume: 0.5,
+        html5: true,
         onload: function () {
           loadedCount++;
           checkIfLoaded();
@@ -852,10 +856,8 @@
       }
 
       function checkIfLoaded() {
-        console.log(loadedCount);
-
         if (loadedCount < 7) {
-          document.getElementById("loading").innerText = "Loading: " + loadedCount;
+          document.getElementById("loading").innerText = "Loading: " + loadedCount + "/7";
         }
         else {
           document.getElementById("loading").innerText = "Click to Start.";
@@ -866,6 +868,7 @@
       var moveAudio = new Howl({
         src: ["move.wav"],
         volume: 1,
+        html5: true,
         onload: function () {
           loadedCount++;
           checkIfLoaded();
@@ -875,6 +878,7 @@
       var swapAudio = new Howl({
         src: ["swap.wav"],
         volume: 1,
+        html5: true,
         onload: function () {
           loadedCount++;
           checkIfLoaded();
@@ -884,6 +888,7 @@
       var startAudio = new Howl({
         src: ["start.wav"],
         volume: 1,
+        html5: true,
         onload: function () {
           loadedCount++;
           checkIfLoaded();
@@ -985,7 +990,7 @@
       document.addEventListener("click", (e) => {
         if (!loaded && loadedCount >= 7) {
           document.getElementById("loading").style.display = 'none';
-          
+
           titleCycle();
 
           startMusic(0.5);
