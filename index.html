@@ -17,6 +17,7 @@
     <canvas id="pixelCanvas" width="400" height="600"></canvas>
     <!-- <canvas id="pixelCanvas2" width="400" height="200"></canvas> -->
     <label id="score">Score: 0</label>
+    <label id="loading">Loading: 0</label>
 
     <!--<script src="main.js"></script>-->
     <!--<script src="/app.bundle.js"></script>-->
@@ -104,7 +105,16 @@
       var starting = false;
       var startingFrame = 0;
 
-      var scoreAudio = new Audio("score.wav");
+      var loadedCount = 0;
+
+      var scoreAudio = new Howl({
+        src: ["score.wav"],
+        volume: 1,
+        onload: function () {
+          loadedCount++;
+          checkIfLoaded();
+        },
+      });
 
       function clearLine() {
         scoreAudio.play();
@@ -114,7 +124,14 @@
         scoreText.innerText = "Score: " + score;
       }
 
-      var gameOverAudio = new Audio("gameOver.wav");
+      var gameOverAudio = new Howl({
+        src: ["gameOver.wav"],
+        volume: 1,
+        onload: function () {
+          loadedCount++;
+          checkIfLoaded();
+        },
+      });
 
       async function gameOverSound() {
         gameOverAudio.play();
@@ -194,7 +211,7 @@
               console.log("game over score: " + score);
 
               gameOverSound();
-              stopMusic2();
+              song2Audio.pause();
 
               running = false;
               endFrame = 0;
@@ -638,12 +655,11 @@
         var music = new URLSearchParams(window.location.search).get("music");
 
         if (music == "true" || !music) {
+          song2Audio.stop();
           song2Audio.play();
           song2Audio.currentTime = 0;
           song2Audio.loop = true;
           song2Audio.volume = 0;
-
-          startMusic2Volume();
         }
       }
 
@@ -741,7 +757,6 @@
               );
               if (music == "true" || !music) {
                 startMusic(0);
-                startMusicVolume();
               }
             }
           },
@@ -799,13 +814,16 @@
         src: ["song.wav"],
         loop: true,
         volume: 0.5,
+        onload: function () {
+          loadedCount++;
+          checkIfLoaded();
+        },
       });
-
-      var songStarted = false;
 
       async function startMusic(volume) {
         var music = new URLSearchParams(window.location.search).get("music");
         if (music == "true" || !music) {
+          songAudio.stop();
           songAudio.play();
           songAudio.currentTime = 0;
           songAudio.loop = true;
@@ -817,77 +835,59 @@
         songAudio.volume = volume;
       }
 
-      function startMusicVolume() {
-        // setTimeout(function () {
-        //   changeMusicVolume(
-        //     songAudio.volume + 0.05 > 0.5 ? 0.5 : songAudio.volume + 0.05
-        //   );
-
-        //   if (songAudio.volume < 0.5) startMusicVolume();
-        // }, 20);
-      }
-
-      function stopMusic() {
-        // setTimeout(function () {
-        //   changeMusicVolume(
-        //     songAudio.volume - 0.05 < 0 ? 0 : songAudio.volume - 0.05
-        //   );
-
-        //   if (songAudio.volume > 0) stopMusic();
-        //   else songAudio.pause();
-        // }, 20);
-        songAudio.pause();
-      }
-
       songAudio.load();
 
       var song2Audio = new Howl({
         src: ["song2.wav"],
         loop: true,
         volume: 0.5,
+        onload: function () {
+          loadedCount++;
+          checkIfLoaded();
+        },
       });
 
       async function changeMusic2Volume(volume) {
         song2Audio.volume = volume;
       }
 
-      function startMusic2Volume() {
-        // setTimeout(function () {
-        //   changeMusic2Volume(
-        //     song2Audio.volume + 0.05 > 0.5 ? 0.5 : song2Audio.volume + 0.05
-        //   );
+      function checkIfLoaded() {
+        console.log(loadedCount);
 
-        //   if (song2Audio.volume < 0.5) startMusic2Volume();
-        // }, 20);
-      }
-
-      function stopMusic2() {
-        // setTimeout(function () {
-        //   // console.log(song2Audio.volume);
-        //   changeMusic2Volume(
-        //     song2Audio.volume - 0.05 < 0 ? 0 : song2Audio.volume - 0.05
-        //   );
-
-        //   if (song2Audio.volume > 0) stopMusic2();
-        //   else song2Audio.pause();
-        // }, 20);
-        song2Audio.pause();
+        if (loadedCount < 7) {
+          document.getElementById("loading").innerText = "Loading: " + loadedCount;
+        }
+        else {
+          document.getElementById("loading").innerText = "Click to Start.";
+        }
       }
 
       // TODO
       var moveAudio = new Howl({
         src: ["move.wav"],
         volume: 1,
+        onload: function () {
+          loadedCount++;
+          checkIfLoaded();
+        },
       });
 
       var swapAudio = new Howl({
         src: ["swap.wav"],
         volume: 1,
+        onload: function () {
+          loadedCount++;
+          checkIfLoaded();
+        },
       });
 
       var startAudio = new Howl({
         src: ["start.wav"],
         volume: 1,
+        onload: function () {
+          loadedCount++;
+          checkIfLoaded();
+        },
       });
 
       function moveUp() {
@@ -934,7 +934,7 @@
         if (onTitle) {
           starting = true;
 
-          stopMusic();
+          songAudio.pause();
 
           startAudio.play();
           startAudio.currentTime = 0;
@@ -983,97 +983,20 @@
       });
 
       document.addEventListener("click", (e) => {
-        if (!loaded) {
-          // audioContext.resume();
-
-          // var moveAudioSource =
-          //   audioContext.createMediaElementSource(moveAudio);
-
-          // moveAudioSource.connect(audioContext.destination);
-
-          // var swapAudioSource =
-          //   audioContext.createMediaElementSource(swapAudio);
-
-          // swapAudioSource.connect(audioContext.destination);
-
-          // var startAudioSource =
-          //   audioContext.createMediaElementSource(startAudio);
-
-          // startAudioSource.connect(audioContext.destination);
-
-          // var scoreAudioSource =
-          //   audioContext.createMediaElementSource(scoreAudio);
-
-          // scoreAudioSource.connect(audioContext.destination);
-
-          // var gameOverAudioSource =
-          //   audioContext.createMediaElementSource(gameOverAudio);
-
-          // gameOverAudioSource.connect(audioContext.destination);
-
-          // var songAudioSource =
-          //   audioContext.createMediaElementSource(songAudio);
-
-          // songAudioSource.connect(audioContext.destination);
-
-          // var song2AudioSource =
-          //   audioContext.createMediaElementSource(song2Audio);
-
-          // song2AudioSource.connect(audioContext.destination);
-
+        if (!loaded && loadedCount >= 7) {
+          document.getElementById("loading").style.display = 'none';
+          
           titleCycle();
 
-          // const audioElement = document.createElement("audioElement");
+          startMusic(0.5);
 
-          // audioElement.src = "swap.wav";
-
-          // var audioTest = new Audio("song.wav");
-
-          // var audioSource = audioContext.createMediaElementSource(audioTest);
-
-          // audioSource.connect(audioContext.destination);
-
-          // console.log(audioContext)
-
-          // audioTest.play();
-
-          // const destination = audioContext.createMediaStreamDestination();
-
-          // audioSource.connect(destination);
-          // audioSource.connect(audioContext.destination);
-
-          // const mediaStream = destination.stream;
-
-          // var options = {
-          //   mediaStream: mediaStream,
-          // };
-
-          // var mediaStreamNode = new MediaStreamAudioSourceNode(audioContext);
+          swapAudio.play();
 
           loaded = true;
         }
-
-        if (!songStarted) {
-          songStarted = true;
-          startMusic(0.5);
-
-          gameOverAudio.play();
-          gameOverAudio.currentTime = gameOverAudio.duration;
-
-          swapAudio.play();
-          swapAudio.currentTime = swapAudio.duration;
-        }
-
-        //   if (canRestart) restart();
-        //   if (onTitle) starting = true;
       });
 
       document.onkeypress = function (e) {
-        if (!songStarted) {
-          songStarted = true;
-          startMusic(0.5);
-        }
-
         e = e || window.event;
 
         if (e.keyCode == 97) {
@@ -1095,13 +1018,9 @@
       var loaded = false;
 
       document.addEventListener("DOMContentLoaded", (event) => {
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 400, 600);
-
-        // titleCycle();
       });
-
-      // var audioContext = new AudioContext();
     </script>
 
     <style>
@@ -1127,6 +1046,24 @@
         overflow: hidden;
         position: fixed;
         top: 5px;
+        left: 50%;
+        transform: translate(-50%, 5px);
+        user-select: none; /* standard syntax */
+        -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+        -moz-user-select: none; /* mozilla browsers */
+        -khtml-user-select: none; /* webkit (konqueror) browsers */
+        -ms-user-select: none; /* IE10+ */
+        color: grey;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+
+      #loading {
+        border: 2px solid grey;
+        touch-action: manipulation;
+        overflow: hidden;
+        position: fixed;
+        top: 45%;
         left: 50%;
         transform: translate(-50%, 5px);
         user-select: none; /* standard syntax */
