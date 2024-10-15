@@ -20,6 +20,7 @@
 
     <!--<script src="main.js"></script>-->
     <!--<script src="/app.bundle.js"></script>-->
+    <script src="howler.js"></script>
 
     <script>
       console.log("start");
@@ -794,8 +795,12 @@
         );
       }
 
-      var songAudio = new Audio("song.wav");
-      songAudio.setAttribute("preload", "auto");
+      var songAudio = new Howl({
+        src: ["song.wav"],
+        loop: true,
+        volume: 0.5,
+      });
+
       var songStarted = false;
 
       async function startMusic(volume) {
@@ -813,62 +818,77 @@
       }
 
       function startMusicVolume() {
-        setTimeout(function () {
-          changeMusicVolume(
-            songAudio.volume + 0.05 > 0.5 ? 0.5 : songAudio.volume + 0.05
-          );
+        // setTimeout(function () {
+        //   changeMusicVolume(
+        //     songAudio.volume + 0.05 > 0.5 ? 0.5 : songAudio.volume + 0.05
+        //   );
 
-          if (songAudio.volume < 0.5) startMusicVolume();
-        }, 20);
+        //   if (songAudio.volume < 0.5) startMusicVolume();
+        // }, 20);
       }
 
       function stopMusic() {
-        setTimeout(function () {
-          changeMusicVolume(
-            songAudio.volume - 0.05 < 0 ? 0 : songAudio.volume - 0.05
-          );
+        // setTimeout(function () {
+        //   changeMusicVolume(
+        //     songAudio.volume - 0.05 < 0 ? 0 : songAudio.volume - 0.05
+        //   );
 
-          if (songAudio.volume > 0) stopMusic();
-          else songAudio.pause();
-        }, 20);
+        //   if (songAudio.volume > 0) stopMusic();
+        //   else songAudio.pause();
+        // }, 20);
+        songAudio.pause();
       }
 
-      var song2Audio = new Audio("song2.wav");
-      song2Audio.setAttribute("preload", "auto");
+      songAudio.load();
+
+      var song2Audio = new Howl({
+        src: ["song2.wav"],
+        loop: true,
+        volume: 0.5,
+      });
 
       async function changeMusic2Volume(volume) {
         song2Audio.volume = volume;
       }
 
       function startMusic2Volume() {
-        setTimeout(function () {
-          changeMusic2Volume(
-            song2Audio.volume + 0.05 > 0.5 ? 0.5 : song2Audio.volume + 0.05
-          );
+        // setTimeout(function () {
+        //   changeMusic2Volume(
+        //     song2Audio.volume + 0.05 > 0.5 ? 0.5 : song2Audio.volume + 0.05
+        //   );
 
-          if (song2Audio.volume < 0.5) startMusic2Volume();
-        }, 20);
+        //   if (song2Audio.volume < 0.5) startMusic2Volume();
+        // }, 20);
       }
 
       function stopMusic2() {
-        setTimeout(function () {
-          // console.log(song2Audio.volume);
-          changeMusic2Volume(
-            song2Audio.volume - 0.05 < 0 ? 0 : song2Audio.volume - 0.05
-          );
+        // setTimeout(function () {
+        //   // console.log(song2Audio.volume);
+        //   changeMusic2Volume(
+        //     song2Audio.volume - 0.05 < 0 ? 0 : song2Audio.volume - 0.05
+        //   );
 
-          if (song2Audio.volume > 0) stopMusic2();
-          else song2Audio.pause();
-        }, 20);
+        //   if (song2Audio.volume > 0) stopMusic2();
+        //   else song2Audio.pause();
+        // }, 20);
+        song2Audio.pause();
       }
 
       // TODO
-      var moveAudio = new Audio("move.wav");
-      moveAudio.setAttribute("preload", "auto");
-      var swapAudio = new Audio("swap.wav");
-      swapAudio.setAttribute("preload", "auto");
-      var startAudio = new Audio("start.wav");
-      startAudio.setAttribute("preload", "auto");
+      var moveAudio = new Howl({
+        src: ["move.wav"],
+        volume: 1,
+      });
+
+      var swapAudio = new Howl({
+        src: ["swap.wav"],
+        volume: 1,
+      });
+
+      var startAudio = new Howl({
+        src: ["start.wav"],
+        volume: 1,
+      });
 
       function moveUp() {
         moveAudio.play();
@@ -964,42 +984,42 @@
 
       document.addEventListener("click", (e) => {
         if (!loaded) {
-          audioContext.resume();
+          // audioContext.resume();
 
-          var moveAudioSource =
-            audioContext.createMediaElementSource(moveAudio);
+          // var moveAudioSource =
+          //   audioContext.createMediaElementSource(moveAudio);
 
-          moveAudioSource.connect(audioContext.destination);
+          // moveAudioSource.connect(audioContext.destination);
 
-          var swapAudioSource =
-            audioContext.createMediaElementSource(swapAudio);
+          // var swapAudioSource =
+          //   audioContext.createMediaElementSource(swapAudio);
 
-          swapAudioSource.connect(audioContext.destination);
+          // swapAudioSource.connect(audioContext.destination);
 
-          var startAudioSource =
-            audioContext.createMediaElementSource(startAudio);
+          // var startAudioSource =
+          //   audioContext.createMediaElementSource(startAudio);
 
-          startAudioSource.connect(audioContext.destination);
+          // startAudioSource.connect(audioContext.destination);
 
-          var scoreAudioSource =
-            audioContext.createMediaElementSource(scoreAudio);
+          // var scoreAudioSource =
+          //   audioContext.createMediaElementSource(scoreAudio);
 
-          scoreAudioSource.connect(audioContext.destination);
+          // scoreAudioSource.connect(audioContext.destination);
 
-          var gameOverAudioSource =
-            audioContext.createMediaElementSource(gameOverAudio);
+          // var gameOverAudioSource =
+          //   audioContext.createMediaElementSource(gameOverAudio);
 
-          gameOverAudioSource.connect(audioContext.destination);
+          // gameOverAudioSource.connect(audioContext.destination);
 
-          var songAudioSource =
-            audioContext.createMediaElementSource(songAudio);
+          // var songAudioSource =
+          //   audioContext.createMediaElementSource(songAudio);
 
-          songAudioSource.connect(audioContext.destination);
+          // songAudioSource.connect(audioContext.destination);
 
-          var song2AudioSource =
-            audioContext.createMediaElementSource(song2Audio);
+          // var song2AudioSource =
+          //   audioContext.createMediaElementSource(song2Audio);
 
-          song2AudioSource.connect(audioContext.destination);
+          // song2AudioSource.connect(audioContext.destination);
 
           titleCycle();
 
@@ -1081,7 +1101,7 @@
         // titleCycle();
       });
 
-      var audioContext = new AudioContext();
+      // var audioContext = new AudioContext();
     </script>
 
     <style>
