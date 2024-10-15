@@ -735,9 +735,13 @@
               startingFrame = 0;
               titleCycle();
 
-              startMusic(0);
-
-              startMusicVolume();
+              var music = new URLSearchParams(window.location.search).get(
+                "music"
+              );
+              if (music == "true" || !music) {
+                startMusic(0);
+                startMusicVolume();
+              }
             }
           },
           endFrame < 20 ? 120 : 10
@@ -958,7 +962,72 @@
 
       document.addEventListener("click", (e) => {
         if (!loaded) {
+          audioContext.resume();
+
+          var moveAudioSource =
+            audioContext.createMediaElementSource(moveAudio);
+
+          moveAudioSource.connect(audioContext.destination);
+
+          var swapAudioSource =
+            audioContext.createMediaElementSource(swapAudio);
+
+          swapAudioSource.connect(audioContext.destination);
+
+          var startAudioSource =
+            audioContext.createMediaElementSource(startAudio);
+
+          startAudioSource.connect(audioContext.destination);
+
+          var scoreAudioSource =
+            audioContext.createMediaElementSource(scoreAudio);
+
+          scoreAudioSource.connect(audioContext.destination);
+
+          var gameOverAudioSource =
+            audioContext.createMediaElementSource(gameOverAudio);
+
+          gameOverAudioSource.connect(audioContext.destination);
+
+          var songAudioSource =
+            audioContext.createMediaElementSource(songAudio);
+
+          songAudioSource.connect(audioContext.destination);
+
+          var song2AudioSource =
+            audioContext.createMediaElementSource(song2Audio);
+
+          song2AudioSource.connect(audioContext.destination);
+
           titleCycle();
+
+          // const audioElement = document.createElement("audioElement");
+
+          // audioElement.src = "swap.wav";
+
+          // var audioTest = new Audio("song.wav");
+
+          // var audioSource = audioContext.createMediaElementSource(audioTest);
+
+          // audioSource.connect(audioContext.destination);
+
+          // console.log(audioContext)
+
+          // audioTest.play();
+
+          // const destination = audioContext.createMediaStreamDestination();
+
+          // audioSource.connect(destination);
+          // audioSource.connect(audioContext.destination);
+
+          // const mediaStream = destination.stream;
+
+          // var options = {
+          //   mediaStream: mediaStream,
+          // };
+
+          // var mediaStreamNode = new MediaStreamAudioSourceNode(audioContext);
+
           loaded = true;
         }
 
@@ -1009,6 +1078,8 @@
 
         // titleCycle();
       });
+
+      var audioContext = new AudioContext();
     </script>
 
     <style>
