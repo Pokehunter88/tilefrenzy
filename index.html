@@ -960,6 +960,8 @@
       }
 
       canvas.addEventListener("click", (e) => {
+        if (!loaded) return;
+
         var rect = canvas.getBoundingClientRect();
         var x = e.clientX - rect.left;
         var y = e.clientY - rect.top;
@@ -1002,6 +1004,23 @@
       });
 
       document.onkeypress = function (e) {
+        if (!loaded && loadedCount >= 7) {
+          document.getElementById("loading").style.display = 'none';
+
+          titleCycle();
+
+          startMusic(0.5);
+
+          swapAudio.play();
+
+          loaded = true;
+          
+          return;
+        }
+        else if (!loaded) {
+          return;
+        }
+
         e = e || window.event;
 
         if (e.keyCode == 97) {
