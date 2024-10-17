@@ -107,16 +107,6 @@
 
       var loadedCount = 1;
 
-      var scoreAudio = new Howl({
-        src: ["score.wav"],
-        volume: 1,
-        html5: true,
-        onload: function () {
-          loadedCount++;
-          checkIfLoaded();
-        },
-      });
-
       function clearLine() {
         scoreAudio.play();
         scoreAudio.currentTime = 0;
@@ -124,16 +114,6 @@
         score += 3;
         scoreText.innerText = "Score: " + score;
       }
-
-      var gameOverAudio = new Howl({
-        src: ["gameOver.wav"],
-        volume: 1,
-        html5: true,
-        onload: function () {
-          loadedCount++;
-          checkIfLoaded();
-        },
-      });
 
       async function gameOverSound() {
         gameOverAudio.play();
@@ -812,17 +792,6 @@
         );
       }
 
-      var songAudio = new Howl({
-        src: ["song.wav"],
-        loop: true,
-        volume: 0.5,
-        html5: true,
-        onload: function () {
-          loadedCount++;
-          checkIfLoaded();
-        },
-      });
-
       async function startMusic(volume) {
         var music = new URLSearchParams(window.location.search).get("music");
         if (music == "true" || !music) {
@@ -838,63 +807,20 @@
         songAudio.volume = volume;
       }
 
-      songAudio.load();
-
-      var song2Audio = new Howl({
-        src: ["song2.wav"],
-        loop: true,
-        volume: 0.5,
-        html5: true,
-        preload: false,
-        onload: function () {
-          loadedCount++;
-          checkIfLoaded();
-        },
-      });
-
       async function changeMusic2Volume(volume) {
         song2Audio.volume = volume;
       }
 
       function checkIfLoaded() {
         if (loadedCount < 7) {
-          document.getElementById("loading").innerText = "Loading: " + loadedCount + "/7";
-        }
-        else {
+          document.getElementById("loading").innerText =
+            "Loading: " + loadedCount + "/7";
+        } else {
           document.getElementById("loading").innerText = "Click to Start.";
         }
       }
 
       // TODO
-      var moveAudio = new Howl({
-        src: ["move.wav"],
-        volume: 1,
-        html5: true,
-        onload: function () {
-          loadedCount++;
-          checkIfLoaded();
-        },
-      });
-
-      var swapAudio = new Howl({
-        src: ["swap.wav"],
-        volume: 1,
-        html5: true,
-        onload: function () {
-          loadedCount++;
-          checkIfLoaded();
-        },
-      });
-
-      var startAudio = new Howl({
-        src: ["start.wav"],
-        volume: 1,
-        html5: true,
-        onload: function () {
-          loadedCount++;
-          checkIfLoaded();
-        },
-      });
 
       function moveUp() {
         moveAudio.play();
@@ -992,7 +918,7 @@
 
       document.addEventListener("click", (e) => {
         if (!loaded && loadedCount >= 7) {
-          document.getElementById("loading").style.display = 'none';
+          document.getElementById("loading").style.display = "none";
 
           titleCycle();
 
@@ -1004,9 +930,17 @@
         }
       });
 
+      var scoreAudio;
+      var gameOverAudio;
+      var songAudio;
+      var song2Audio;
+      var moveAudio;
+      var swapAudio;
+      var startAudio;
+
       document.onkeypress = function (e) {
         if (!loaded && loadedCount >= 7) {
-          document.getElementById("loading").style.display = 'none';
+          document.getElementById("loading").style.display = "none";
 
           titleCycle();
 
@@ -1015,10 +949,9 @@
           swapAudio.play();
 
           loaded = true;
-          
+
           return;
-        }
-        else if (!loaded) {
+        } else if (!loaded) {
           return;
         }
 
@@ -1045,6 +978,72 @@
       document.addEventListener("DOMContentLoaded", (event) => {
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 400, 600);
+
+        scoreAudio = new Howl({
+          src: ["score.wav"],
+          volume: 1,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        gameOverAudio = new Howl({
+          src: ["gameOver.wav"],
+          volume: 1,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        songAudio = new Howl({
+          src: ["song.wav"],
+          loop: true,
+          volume: 0.5,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        song2Audio = new Howl({
+          src: ["song2.wav"],
+          loop: true,
+          volume: 0.5,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        moveAudio = new Howl({
+          src: ["move.wav"],
+          volume: 1,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        swapAudio = new Howl({
+          src: ["swap.wav"],
+          volume: 1,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        startAudio = new Howl({
+          src: ["start.wav"],
+          volume: 1,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
       });
     </script>
 
