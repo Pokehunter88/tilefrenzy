@@ -979,73 +979,71 @@
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 400, 600);
 
-        setTimeout(function () {
-          scoreAudio = new Howl({
-            src: ["score.wav"],
-            volume: 1,
-            html5: true,
-            onload: function () {
-              loadedCount++;
-              checkIfLoaded();
-            },
-          });
-          gameOverAudio = new Howl({
-            src: ["gameOver.wav"],
-            volume: 1,
-            html5: true,
-            onload: function () {
-              loadedCount++;
-              checkIfLoaded();
-            },
-          });
-          songAudio = new Howl({
-            src: ["song.wav"],
-            loop: true,
-            volume: 0.5,
-            html5: true,
-            onload: function () {
-              loadedCount++;
-              checkIfLoaded();
-            },
-          });
-          song2Audio = new Howl({
-            src: ["song2.wav"],
-            loop: true,
-            volume: 0.5,
-            html5: true,
-            onload: function () {
-              loadedCount++;
-              checkIfLoaded();
-            },
-          });
-          moveAudio = new Howl({
-            src: ["move.wav"],
-            volume: 1,
-            html5: true,
-            onload: function () {
-              loadedCount++;
-              checkIfLoaded();
-            },
-          });
-          swapAudio = new Howl({
-            src: ["swap.wav"],
-            volume: 1,
-            html5: true,
-            onload: function () {
-              loadedCount++;
-              checkIfLoaded();
-            },
-          });
-          startAudio = new Howl({
-            src: ["start.wav"],
-            volume: 1,
-            html5: true,
-            onload: function () {
-              loadedCount++;
-              checkIfLoaded();
-            },
-          });
-        }, 100);
+        scoreAudio = new Howl({
+          src: ["score.wav"],
+          volume: 1,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        gameOverAudio = new Howl({
+          src: ["gameOver.wav"],
+          volume: 1,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        songAudio = new Howl({
+          src: ["song.wav"],
+          loop: true,
+          volume: 0.5,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        song2Audio = new Howl({
+          src: ["song2.wav"],
+          loop: true,
+          volume: 0.5,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        moveAudio = new Howl({
+          src: ["move.wav"],
+          volume: 1,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        swapAudio = new Howl({
+          src: ["swap.wav"],
+          volume: 1,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
+        startAudio = new Howl({
+          src: ["start.wav"],
+          volume: 1,
+          html5: true,
+          onload: function () {
+            loadedCount++;
+            checkIfLoaded();
+          },
+        });
       });
     </script>
 
