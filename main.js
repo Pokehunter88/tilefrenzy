@@ -1083,3 +1083,8 @@ var song2Audio;
 var moveAudio;
 var swapAudio;
 var startAudio;
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, 400, 600);
+});
