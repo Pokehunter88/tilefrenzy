@@ -908,7 +908,7 @@ document.addEventListener("click", (e) => {
     songAudio = new Howl({
       src: ["song.wav"],
       loop: true,
-      volume: 0.5,
+      volume: 0.3,
       html5: true,
       onload: function () {
         loadedCount++;
@@ -918,7 +918,7 @@ document.addEventListener("click", (e) => {
     song2Audio = new Howl({
       src: ["song2.wav"],
       loop: true,
-      volume: 0.5,
+      volume: 0.3,
       html5: true,
       onload: function () {
         loadedCount++;
