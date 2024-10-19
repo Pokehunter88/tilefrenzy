@@ -17,7 +17,7 @@
     <canvas id="pixelCanvas" width="400" height="600"></canvas>
     <!-- <canvas id="pixelCanvas2" width="400" height="200"></canvas> -->
     <label id="score">Score: 0</label>
-    <label id="loading">Loading: 0</label>
+    <label id="loading">Click to start loading.</label>
 
     <!--<script src="main.js"></script>-->
     <!--<script src="/app.bundle.js"></script>-->
@@ -925,8 +925,8 @@
       });
 
       document.addEventListener("click", (e) => {
-        // if (!loaded && loadedCount >= 7) {
-        if (!loaded) {
+        if (!loading) {
+          loading = true;
           scoreAudio = new Howl({
             src: ["score.wav"],
             volume: 1,
@@ -992,7 +992,7 @@
               checkIfLoaded();
             },
           });
-
+        } else if (!loaded && loadedCount >= 7) {
           document.getElementById("loading").style.display = "none";
 
           titleCycle();
@@ -1041,6 +1041,7 @@
       };
 
       var loaded = false;
+      var loading = false;
 
       var scoreAudio;
       var gameOverAudio;
