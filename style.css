@@ -1,0 +1,82 @@
+#pixelCanvas {
+    border: 2px solid grey;
+    touch-action: manipulation;
+    overflow: hidden;
+    position: fixed;
+    height: 85%;
+    top: 30px;
+    left: 50%;
+    transform: translate(-50%, 2%);
+    user-select: none;
+    /* standard syntax */
+    -webkit-user-select: none;
+    /* webkit (safari, chrome) browsers */
+    -moz-user-select: none;
+    /* mozilla browsers */
+    -khtml-user-select: none;
+    /* webkit (konqueror) browsers */
+    -ms-user-select: none;
+    /* IE10+ */
+}
+
+#score {
+    border: 2px solid grey;
+    touch-action: manipulation;
+    overflow: hidden;
+    position: fixed;
+    top: 5px;
+    left: 50%;
+    transform: translate(-50%, 5px);
+    color: grey;
+    text-align: center;
+    padding: 3px;
+    user-select: none;
+    /* standard syntax */
+    -webkit-user-select: none;
+    /* webkit (safari, chrome) browsers */
+    -moz-user-select: none;
+    /* mozilla browsers */
+    -khtml-user-select: none;
+    /* webkit (konqueror) browsers */
+    -ms-user-select: none;
+    /* IE10+ */
+}
+
+#loading {
+    border: 2px solid grey;
+    touch-action: manipulation;
+    overflow: hidden;
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, 5px);
+    color: grey;
+    padding: 3px;
+    user-select: none;
+    /* standard syntax */
+    -webkit-user-select: none;
+    /* webkit (safari, chrome) browsers */
+    -moz-user-select: none;
+    /* mozilla browsers */
+    -khtml-user-select: none;
+    /* webkit (konqueror) browsers */
+    -ms-user-select: none;
+    /* IE10+ */
+}
+
+body {
+    background-color: black;
+    overflow: hidden;
+    position: fixed;
+    touch-action: manipulation;
+    user-select: none;
+    /* standard syntax */
+    -webkit-user-select: none;
+    /* webkit (safari, chrome) browsers */
+    -moz-user-select: none;
+    /* mozilla browsers */
+    -khtml-user-select: none;
+    /* webkit (konqueror) browsers */
+    -ms-user-select: none;
+    /* IE10+ */
+}
